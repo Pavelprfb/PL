@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show Data</title>
+    <style>
+        .copy-btn {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+        .copy-btn.copied {
+            color: red;
+            font-weight: bold;
+        }
+        .delete-btn {
+            cursor: pointer;
+            color: red;
+            text-decoration: underline;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Show Data</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Username</th>
+                <th>Copy</th>
+                <th>Password</th>
+                <th>Copy</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach((user, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td> <!-- Display row number -->
+                    <td><%= user.username %></td>
+                    <td>
+                        <button class="copy-btn" onclick="copyToClipboard('<%= user.username %>', this)">Copy</button>
+                    </td>
+                    <td><%= user.password %></td>
+                    <td>
+                        <button class="copy-btn" onclick="copyToClipboard('<%= user.password %>', this)">Copy</button>
+                    </td>
+                    <td>
+                        <button class="delete-btn" onclick="deleteEntry('<%= user._id %>')">Delete</button>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <a href="/delete">Delete All Data</a>
+    <a href="/download">Download All Data</a>
+
+    <script>
+        function copyToClipboard(value, button) {
+            // Create a temporary textarea element to copy text
+            const textarea = document.createElement('textarea');
+            textarea.value = value;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            // Change button text and style
+            button.textContent = 'Copied';
+            button.classList.add('copied');
+
+            // Keep the button color red and text "Copied" for 3 seconds, then reset
+            setTimeout(() => {
+                button.textContent = 'Copy';
+                button.classList.remove('copied');
+            }, 20000);
+        }
+
+        function deleteEntry(userId) {
+            // Create a form to send a DELETE request
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/delete-entry';
+            form.style.display = 'none';
+
+            // Add user ID as hidden input
+            const userIdInput = document.createElement('input');
+            userIdInput.type = 'hidden';
+            userIdInput.name = 'userId';
+            userIdInput.value = userId;
+            form.appendChild(userIdInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</body>
+</html>
