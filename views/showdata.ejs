@@ -18,15 +18,27 @@
             text-decoration: underline;
             margin-left: 5px;
         }
+        .box{
+          display: flex;
+          justify-content: space-avenly;
+          align-items: center;
+        }
         .linkStyleButton{
-          display: block;
-          margin: 100px auto 0;
+          display: inline-block;
+          margin: 100px auto 100px;
           text-decoration: none;
           background-color: blue;
           color: white;
           border: 0;
           outline: 0;
           border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px 30px;
+        }
+        .linkStyleButton.delete{
+          background-color: red;
         }
     </style>
 </head>
@@ -62,9 +74,11 @@
             <% }) %>
         </tbody>
     </table>
-    <a class="linkStyleButton" href="/delete">Delete All Data</a>
-    <a class="linkStyleButton" href="/download">Download All Data</a>
-
+    <div class="box">
+      <a class="linkStyleButton delete" href="/delete">Delete All Data</a>
+      <a class="linkStyleButton download" href="/download">Download All Data</a>
+    </div>
+    
     <script>
         function copyToClipboard(value, button) {
             // Create a temporary textarea element to copy text
