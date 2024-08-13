@@ -18,6 +18,16 @@
             text-decoration: underline;
             margin-left: 5px;
         }
+        .linkStyleButton{
+          display: block;
+          margin: 100px auto 0;
+          text-decoration: none;
+          background-color: blue;
+          color: white;
+          border: 0;
+          outline: 0;
+          border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -25,35 +35,35 @@
     <table border="1">
         <thead>
             <tr>
-                <th>Number</th>
+                <th>Actions</th>
                 <th>Username</th>
                 <th>Copy</th>
+                <th>Number</th>
                 <th>Password</th>
                 <th>Copy</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <% users.forEach((user, index) => { %>
                 <tr>
-                    <td><%= index + 1 %></td> <!-- Display row number -->
+                    <td>
+                        <button class="delete-btn" onclick="deleteEntry('<%= user._id %>')">Delete</button>
+                    </td>
                     <td><%= user.username %></td>
                     <td>
                         <button class="copy-btn" onclick="copyToClipboard('<%= user.username %>', this)">Copy</button>
                     </td>
+                    <td><%= index + 1 %></td> <!-- Display row number -->
                     <td><%= user.password %></td>
                     <td>
                         <button class="copy-btn" onclick="copyToClipboard('<%= user.password %>', this)">Copy</button>
-                    </td>
-                    <td>
-                        <button class="delete-btn" onclick="deleteEntry('<%= user._id %>')">Delete</button>
                     </td>
                 </tr>
             <% }) %>
         </tbody>
     </table>
-    <a href="/delete">Delete All Data</a>
-    <a href="/download">Download All Data</a>
+    <a class="linkStyleButton" href="/delete">Delete All Data</a>
+    <a class="linkStyleButton" href="/download">Download All Data</a>
 
     <script>
         function copyToClipboard(value, button) {
